@@ -4,9 +4,9 @@ The line pitches a topping that has no business on a pizza: gummy
 bears, melted straight into the cheese. The joke turns on the sales
 voice colliding with the reality of the topping -- it is presented
 like a premium feature, but every promised benefit is actually a
-defect: the slice stretches, it squeaks, and it glues itself to
-your teeth for a week. The humour lands in a single vivid beat, it
-could only be about this topping (cheese, stretch, squeak, stuck
+defect: the slice stretches, it squeaks, and it holds your teeth
+hostage for a week. The humour lands in a single vivid beat, it
+could only be about this topping (cheese, stretch, squeak, hostage
 teeth), and the pitch sounds like something a shameless pizzeria
 would actually say out loud.
 
@@ -20,17 +20,17 @@ import os
 
 # The entry: a sales pitch for the worst pizza topping ever -- gummy
 # bears melted into the cheese. The stretch, the squeak and the
-# week-long tooth glue are all sold as features, which is exactly
-# why the topping is terrible.
-LINE = "Our new topping: gummy bears melted into the cheese, so every slice stretches, squeaks, and sticks to your teeth for a week."
+# week-long tooth hostage-taking are all sold as features, which is
+# exactly why the topping is terrible.
+LINE = "Our new topping: gummy bears melted into the cheese, so every slice stretches, squeaks, and holds your teeth hostage for a week."
 
 
 def validate(text):
     """Check that a candidate entry line meets the competition rules.
 
     Raises ValueError unless ``text`` is a non-blank single-line ASCII
-    string of 1 to 200 characters, with no leading or trailing space and
-    no double spaces.
+    string of 1 to 200 characters, with no leading or trailing space,
+    no double spaces, and no tab characters.
     """
     if not isinstance(text, str):
         raise ValueError("entry must be a string")
@@ -40,6 +40,8 @@ def validate(text):
         raise ValueError("entry must be ASCII only")
     if "\n" in text or "\r" in text:
         raise ValueError("entry must be a single line")
+    if "\t" in text:
+        raise ValueError("entry must not contain tabs")
     if not text.strip():
         raise ValueError("entry must not be blank")
     if text != text.strip():
